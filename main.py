@@ -3,7 +3,8 @@ def main():
     numWords = wordCount(bookContent)
     # print(charCount(bookContent))
     listOfObjects = toList(charCount(bookContent))
-    print(test(listOfObjects))
+    listOfObjects.sort(reverse=True, key=sort_on)
+    report(listOfObjects, numWords)
 
 def getBook():
     bookpath = "books/frankenstein.txt"
@@ -30,15 +31,18 @@ def charCount(wordArr):
     return charC
 
 def toList(dict):
-    return [{key:value} for key, value in dict.items()]
+    return [{"letter":key, "count":value} for key, value in dict.items()]
 
-def test(arr):
-    narr = []
-    for i in arr:
-        for key, value in i.items():
-            if key.isalpha():
-                narr.append(value)
-    return narr
+def sort_on(dict):
+    return dict["count"]
 
+def report(listOfObjs, numOfWords):
+    print(f"--- Begin report of books/frankenstein.txt ---\n")
+    print(f"{numOfWords} words was found in the document\n")
+    for obj in listOfObjs:
+        if obj["letter"].isalpha():
+            print(f"The {obj['letter']} character was found {obj['count']} times")
+    print("\n")
+    print(f"--- End report ---")
                 
 main()
